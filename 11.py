@@ -11,7 +11,7 @@ y_or = np.array([[0], [1], [1], [1]])
 
 # Define the Perceptron class
 class Perceptron:
-    def _init_(self, input_size, learning_rate=0.1, epochs=1000):
+    def __init__(self, input_size, learning_rate=0.1, epochs=1000):
         self.weights = np.zeros((input_size, 1))
         self.bias = 0
         self.learning_rate = learning_rate
