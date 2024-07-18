@@ -16,28 +16,25 @@ plt.title('Contour Plot')
 plt.show()
 
 
-2b)
-def h(n):
+2b)def h(n):
     H = {'A': 3, 'B': 4, 'C': 2, 'D': 6, 'G': 0, 'S': 5}
     return H[n]
 
 def a_star_algorithm(graph, start, goal):
-
     open_list = [start]
     closed_list = set()
 
-    g = {start:0}
-
-    parents = {start:start}
+    g = {start: 0}
+    parents = {start: start}
 
     while open_list:
-
         open_list.sort(key=lambda v: g[v] + h(v), reverse=True)
         n = open_list.pop()
 
         # If node is goal then construct the path and return
         if n == goal:
             reconst_path = []
+            total_cost = g[n]  # total cost to reach the goal
 
             while parents[n] != n:
                 reconst_path.append(n)
@@ -46,11 +43,11 @@ def a_star_algorithm(graph, start, goal):
             reconst_path.append(start)
             reconst_path.reverse()
 
-            print(f'Path found: {reconst_path}')
-            return reconst_path
+            print(f'Path found: {reconst_path} with total cost {total_cost}')
+            return reconst_path, total_cost
 
         for (m, weight) in graph[n]:
-        # if m is first visited, add it to open_list and note its parent
+            # if m is first visited, add it to open_list and note its parent
             if m not in open_list and m not in closed_list:
                 open_list.append(m)
                 parents[m] = n
@@ -68,19 +65,19 @@ def a_star_algorithm(graph, start, goal):
                         closed_list.remove(m)
                         open_list.append(m)
 
-        # Node's neighbours are visited. Now put node to closed list.
+        # Node's neighbors are visited. Now put node to closed list.
         closed_list.add(n)
 
     print('Path does not exist!')
-    return None
-
+    return None, None
 
 graph = {
     'S': [('A', 1), ('G', 10)],
     'A': [('B', 2), ('C', 1)],
     'B': [('D', 5)],
-    'C': [('D', 3),('G', 4)],
+    'C': [('D', 3), ('G', 4)],
     'D': [('G', 2)]
 }
 
 a_star_algorithm(graph, 'S', 'G')
+
